@@ -1,0 +1,52 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "com.linkedin.pegasus:d2:6.0.12"
+    compile "com.googlecode.json-simple:json-simple:1.1.1"
+    compile "com.linkedin.pegasus:restli-common:6.0.12"
+    compile "com.google.guava:guava:20.0"
+}
+
+// method 1 of running main() from .jar
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Server A Client',
+                'Implementation-Version': 1.0,
+                'Main-Class': 'com.rockyzhu.servera.zookeeper.ZooKeeperConnector'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+/*
+// method 2 of running main() from .jar
+jar {
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+        configurations.runtime.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    manifest {
+        attributes 'Implementation-Title': 'Server A Client',
+                'Implementation-Version': 1.0,
+                'Main-Class': 'com.rockyzhu.servera.zookeeper.ZooKeeperConnector'
+    }
+}
+
+buildscript {
+    dependencies {
+        classpath fileTree(dir: '../../build/libs', include: '*.jar', excludes: ['*javadoc.jar', '*sources.jar'])
+    }
+}*/

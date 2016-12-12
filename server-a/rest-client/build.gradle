@@ -1,0 +1,24 @@
+apply plugin: 'java'
+
+//buildDir = '../build/rest-client'
+
+dependencies {
+//    compile fileTree(dir: '../build/rest-api/libs', include: '*.jar', configuration: 'restClient')
+//    compile fileTree(dir: '../build/rest-api/libs', include: '*.jar')
+    compile project(path: ':rest-api', configuration: 'restClient')
+//    runtime fileTree(dir: '../build/rest-api/libs', include: '*.jar', configuration: 'restClient')
+}
+
+/*
+def installer = install.repositories.mavenInstaller
+[installer]*.pom*.whenConfigured {pom ->
+    pom.dependencies.find {dep -> dep.groupId == project.group && dep.artifactId == 'my-rest-api' }.artifactId = 'my-rest-api-rest-client'
+}
+
+if (rootProject.publishToMaven) {
+    def deployer = uploadArchives.repositories.mavenDeployer
+    [deployer]*.pom*.whenConfigured {pom ->
+        pom.dependencies.find {dep -> dep.groupId == project.group && dep.artifactId == 'my-rest-api' }.artifactId = 'my-rest-api-rest-client'
+    }
+}
+*/

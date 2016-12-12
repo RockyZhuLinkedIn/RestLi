@@ -1,0 +1,73 @@
+
+{
+  "clusterServiceConfigurations" : {
+    "MyFirstService": {
+      "services": {
+        "add": {
+          "path" : "/server-a/add"
+        },
+        "reverse": {
+          "path" : "/server-a/reverse"
+        }
+      }
+    }
+  },
+
+  "serviceDefaults" : {
+    "loadBalancerStrategyList" : [
+      "degraderV3",
+      "degraderV2"
+    ],
+    "prioritizedSchemes" : [
+      "http"
+    ],
+    "loadBalancerStrategyProperties" : {
+      "http.loadBalancer.updateIntervalMs" : "5000",
+      "http.loadBalancer.pointsPerWeight" : "100"
+    },
+    "transportClientProperties" : {
+      "http.requestTimeout" : "10000"
+    },
+    "degraderProperties" : {
+      "degrader.minCallCount" : "10",
+      "degrader.lowErrorRate" : "0.01",
+      "degrader.highErrorRate" : "0.1"
+    }
+  },
+
+  "serviceClusterMappings" : [
+    {
+      "serverUri" : "http://localhost:7070",
+      "d2Cluster" : "MyFirstService",
+      "partitionData" : {
+        "0" : {
+          "weight" : "1.0"
+        }
+      }
+    },
+    {
+      "serverUri" : "http://localhost:7071",
+      "d2Cluster" : "MyFirstService",
+      "partitionData" : {
+        "0" : {
+          "weight" : "1.0"
+        }
+      }
+    },
+    {
+      "serverUri" : "http://localhost:7072",
+      "d2Cluster" : "MyFirstService",
+      "partitionData" : {
+        "0" : {
+          "weight" : "1.0"
+        }
+      }
+    }
+  ],
+  "zkConnectString" : "localhost:2181",
+  "zkSessionTimeout" : 5000,
+  "zkBasePath" : "/d2",
+  "zkRetryLimit" : 10,
+  "announcerStartTimeout" : 5000,
+  "announcerShutdownTimeout" : 5000
+}

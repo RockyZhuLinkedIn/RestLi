@@ -1,0 +1,16 @@
+apply plugin: 'war'  // compile(), war.*
+
+war.archiveName "server-a.war"
+
+//buildDir = '../build/server-a-war'
+
+dependencies {
+    // war: FilterChains, SimpleLoggingFilter, ServerCompressionFilter
+    compile spec.linkedin.pegasus.r2FilterCompression
+    // war: RestliHttpRequestHandler, SpringInjectResourceFactory
+    compile spec.linkedin.pegasus.restliSpringBridge
+    runtime project(':rest-impl')               // needed for accessing resources
+    // DevServer
+    compile spec.eclipse.jetty.jettyServlet
+    compile spec.eclipse.jetty.jettyWebapp
+}

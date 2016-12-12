@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "Buddy",
+  "namespace": "com.rockyzhu.api",
+  "doc": "Buddy data schema",
+  "fields": [
+    {
+      "name": "message",
+      "type": "string",
+      "doc": "An example 'message' field of type string"
+    }
+  ]
+}

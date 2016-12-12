@@ -1,0 +1,20 @@
+{
+  "type": "record",
+  "name": "AddKey",
+  "namespace": "com.rockyzhu.api",
+  "doc": "AddKey data schema",
+  "fields": [
+    {
+      "name": "a",
+      "type": "int",
+      "optional": true,
+      "doc": "first adder"
+    },
+    {
+      "name": "b",
+      "type": "int",
+      "optional": true,
+      "doc": "second adder"
+    }
+  ]
+}

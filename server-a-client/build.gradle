@@ -1,0 +1,30 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+
+    flatDir {
+        dirs '/Users/hozhu/work/components/RestLi/server-a/rest-api/build/libs/'
+    }
+}
+
+dependencies {
+    compile name: 'rest-api-data-template-0.1'
+    compile name: 'rest-api-rest-client-0.1'
+    //compile "rest-api:data-template:0.1"
+    //compile "rest-api:rest-client:0.1"
+    compile "com.linkedin.pegasus:restli-client:6.0.12"  // src/main/java and src/test/java
+    compile "com.linkedin.pegasus:r2:6.0.12"             // src/main/java and src/test/java
+    compile "com.linkedin.pegasus:d2:6.0.12"
+    compile "com.google.guava:guava:20.0"
+    compile "com.googlecode.json-simple:json-simple:1.1.1"
+    testCompile "org.testng:testng:6.4"                  // src/test/java
+}
+
+test {
+    useTestNG()
+}

@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    // add rest.li's gradle plugins so they can be used throughout project
+    dependencies {
+        classpath 'com.linkedin.pegasus:gradle-plugins:' + pegasusVersion
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.1'
+}
+
+ext.spec = [
+    // https://repo1.maven.org/maven2/com/linkedin/pegasus/
+    'linkedin' : [
+        'pegasus' : [
+            'data' : 'com.linkedin.pegasus:data:' + pegasusVersion,
+            'restliCommon' : 'com.linkedin.pegasus:restli-common:' + pegasusVersion,
+            'restliClient' : 'com.linkedin.pegasus:restli-client:' + pegasusVersion,
+            'restliServer' : 'com.linkedin.pegasus:restli-server:' + pegasusVersion,
+            'restliSpringBridge' : 'com.linkedin.pegasus:restli-spring-bridge:' + pegasusVersion,
+            'r2FilterCompression' : 'com.linkedin.pegasus:r2-filter-compression:'+ pegasusVersion
+        ]
+    ],
+    // https://repo1.maven.org/maven2/org/springframework/
+    'springframework' : [
+        'springContext': 'org.springframework:spring-context:' + springVersion
+    ],
+    // https://repo1.maven.org/maven2/org/eclipse/jetty/
+    'eclipse' : [
+        'jetty': [
+            'jettyServlet': 'org.eclipse.jetty:jetty-servlet:' + jettyVersion,
+            'jettyWebapp': 'org.eclipse.jetty:jetty-webapp:' + jettyVersion
+        ]
+    ]
+]
+
+allprojects {
+    apply plugin: 'idea'
+}
+
+subprojects {
+    apply plugin: 'maven'
+
+    afterEvaluate {
+        if (project.plugins.hasPlugin('java')) {
+            sourceCompatibility = JavaVersion.VERSION_1_8
+        }
+
+        // add the standard pegasus dependencies wherever the plugin is used
+        if (project.plugins.hasPlugin('pegasus')) {
+            dependencies {
+                dataTemplateCompile spec.linkedin.pegasus.data
+                restClientCompile spec.linkedin.pegasus.restliClient
+                restClientCompile spec.linkedin.pegasus.restliServer
+
+                // needed for Gradle 1.9+
+                restClientCompile spec.linkedin.pegasus.restliCommon
+            }
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    project.group = 'org.rockyzhu'
+    project.version = '0.1'
+}

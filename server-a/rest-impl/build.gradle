@@ -1,0 +1,18 @@
+apply plugin: 'pegasus' // defines compile project()
+
+//buildDir = '../build/rest-impl'
+
+ext.apiProject = project(':rest-api')
+dependencies {
+    // REST model related libs should also be defined in rest-api's build.gradle
+    //dataModel spec.linkedin.pegasus.restliCommon  // EmptyRecord
+
+    // rest-impl: ComplexKeyResourceTemplate, CollectionResourceTemplate, @RestLiCollection
+    compile spec.linkedin.pegasus.restliServer
+    // rest-impl: @Component
+    compile spec.springframework.springContext
+
+    //compile fileTree(dir: '../build/rest-api/libs', include: '*.jar')
+    compile project(':rest-api')
+}
+
