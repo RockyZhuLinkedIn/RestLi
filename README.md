@@ -13,5 +13,8 @@ The server-a project shows:
   
 ## server-a-client
 The server-a-project shows:
-  1. how to use the generated client library to call the RestLi Server
-  2. how to use Load Balancer (Linkedin's open)
+  1. how to use the generated client library to ease calling RestLi Server
+  2. how to use Load Balancer (Linkedin's open source library) when there are multiple servers
+
+## server-a-zookeeper
+The server-a-zookeeper illustrates how to announce server information to zookeeper so client could determine which one to call
